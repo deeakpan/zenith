@@ -23,18 +23,19 @@ export default function CountryBorders({ map }: CountryBordersProps) {
           // Create GeoJSON layer with custom styling
           bordersRef.current = L.geoJSON(data, {
             style: (feature) => {
-              if (!feature?.properties?.name) return {
-                color: '#ffffff',
-                weight: 1,
-                fillColor: '#1a1a1a',
-                fillOpacity: 0.3
-              };
+              if (!feature?.properties?.name)
+                return {
+                  color: '#ffffff',
+                  weight: 1,
+                  fillColor: '#1a1a1a',
+                  fillOpacity: 0.3,
+                };
 
               return {
                 color: '#ffffff',
                 weight: 1,
                 fillColor: '#1a1a1a',
-                fillOpacity: 0.3
+                fillOpacity: 0.3,
               };
             },
             onEachFeature: (feature, layer) => {
@@ -46,7 +47,7 @@ export default function CountryBorders({ map }: CountryBordersProps) {
                     color: '#ffffff',
                     weight: 2,
                     fillOpacity: 0.5,
-                    fillColor: '#2a2a2a'
+                    fillColor: '#2a2a2a',
                   });
                   layer.bringToFront();
                 },
@@ -57,7 +58,7 @@ export default function CountryBorders({ map }: CountryBordersProps) {
                   // Handle country selection
                   const countryName = feature.properties?.name;
                   console.log('Selected country:', countryName);
-                  
+
                   // Highlight the selected country
                   bordersRef.current?.eachLayer((layer) => {
                     if (layer instanceof L.Path) {
@@ -65,20 +66,20 @@ export default function CountryBorders({ map }: CountryBordersProps) {
                         color: '#ffffff',
                         weight: 1,
                         fillOpacity: 0.3,
-                        fillColor: '#1a1a1a'
+                        fillColor: '#1a1a1a',
                       });
                     }
                   });
-                  
+
                   e.target.setStyle({
                     color: '#00ff00',
                     weight: 2,
                     fillOpacity: 0.5,
-                    fillColor: '#2a2a2a'
+                    fillColor: '#2a2a2a',
                   });
-                }
+                },
               });
-            }
+            },
           }).addTo(map);
 
           // Bring borders to front
@@ -97,4 +98,4 @@ export default function CountryBorders({ map }: CountryBordersProps) {
   }, [map]);
 
   return null;
-} 
+}

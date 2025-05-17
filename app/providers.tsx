@@ -14,7 +14,7 @@ const config = createConfig({
   },
   connectors: [
     metaMask(),
-    coinbaseWallet({ 
+    coinbaseWallet({
       appName: 'Zenith',
       chainId: baseSepolia.id,
       jsonRpcUrl: 'https://sepolia.base.org',
@@ -42,4 +42,3 @@ export function Providers(props: { children: ReactNode }) {
     </WagmiProvider>
   );
 }
-

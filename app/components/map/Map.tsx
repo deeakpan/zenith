@@ -6,7 +6,8 @@ import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 
 // Updated to use Natural Earth dataset
-const COUNTRIES_GEOJSON_URL = 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson';
+const COUNTRIES_GEOJSON_URL =
+  'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson';
 
 // Animation durations
 const ANIMATION_DURATION = 300; // ms
@@ -39,13 +40,13 @@ export default function Map() {
       zoomDelta: 0.5,
       maxBounds: [
         [-90, -180], // Southwest coordinates
-        [90, 180]    // Northeast coordinates
+        [90, 180], // Northeast coordinates
       ],
       maxBoundsViscosity: 1.0,
       // Improved touch settings
       bounceAtZoomLimits: false,
       // Improved performance
-      preferCanvas: true
+      preferCanvas: true,
     });
 
     // Add dark theme tile layer with improved settings
@@ -58,7 +59,7 @@ export default function Map() {
       subdomains: 'abcd',
       // Improved performance
       updateWhenIdle: true,
-      updateWhenZooming: false
+      updateWhenZooming: false,
     }).addTo(map);
 
     // Force the map to stay full screen with improved handling
@@ -82,11 +83,13 @@ export default function Map() {
     window.addEventListener('resize', debouncedResize);
 
     // Add zoom control with custom position and styling
-    const zoomControl = L.control.zoom({
-      position: 'bottomright',
-      zoomInText: '+',
-      zoomOutText: '-'
-    }).addTo(map);
+    const zoomControl = L.control
+      .zoom({
+        position: 'bottomright',
+        zoomInText: '+',
+        zoomOutText: '-',
+      })
+      .addTo(map);
 
     // Style zoom controls
     const zoomControlContainer = zoomControl.getContainer();
@@ -102,14 +105,14 @@ export default function Map() {
     map.whenReady(() => {
       // Fetch and add country polygons with improved styling
       fetch(COUNTRIES_GEOJSON_URL)
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((geojson) => {
           const geoJsonLayer = L.geoJSON(geojson, {
             style: {
               color: '#ffffff',
               weight: 1,
               fillOpacity: 0,
-              opacity: 0.8
+              opacity: 0.8,
             },
             onEachFeature: (feature, layer) => {
               // Add smooth transitions using CSS classes instead
@@ -124,12 +127,12 @@ export default function Map() {
                   if (layer !== selectedLayerRef.current) {
                     // Store hover layer for cleanup
                     hoverLayerRef.current = layer;
-                    
+
                     // Smooth hover effect
                     layer.setStyle({
                       color: '#ffffff',
                       weight: 2,
-                      opacity: 1
+                      opacity: 1,
                     });
                   }
                   layer.bringToFront();
@@ -141,23 +144,23 @@ export default function Map() {
                     layer.setStyle({
                       color: '#ffffff',
                       weight: 1,
-                      opacity: 0.8
+                      opacity: 0.8,
                     });
                     hoverLayerRef.current = null;
                   }
                 },
                 click: (e) => {
                   const layer = e.target;
-                  
+
                   // Reset previous selection with smooth transition
                   if (selectedLayerRef.current) {
                     selectedLayerRef.current.setStyle({
                       color: '#ffffff',
                       weight: 1,
-                      opacity: 0.8
+                      opacity: 0.8,
                     });
                   }
-                  
+
                   // If clicking the same country, deselect it
                   if (selectedLayerRef.current === layer) {
                     selectedLayerRef.current = null;
@@ -166,15 +169,15 @@ export default function Map() {
                     layer.setStyle({
                       color: '#00ff00',
                       weight: 2,
-                      opacity: 1
+                      opacity: 1,
                     });
                     selectedLayerRef.current = layer;
                   }
-                }
+                },
               });
-            }
+            },
           }).addTo(map);
-          
+
           geoJsonLayerRef.current = geoJsonLayer;
         });
     });
@@ -203,15 +206,15 @@ export default function Map() {
       <div
         ref={mapContainerRef}
         className="w-full h-full touch-none"
-        style={{ 
+        style={{
           touchAction: 'none',
           // Improved mobile handling
           WebkitTapHighlightColor: 'transparent',
           WebkitTouchCallout: 'none',
           WebkitUserSelect: 'none',
-          userSelect: 'none'
+          userSelect: 'none',
         }}
       />
     </motion.div>
   );
-} 
+}

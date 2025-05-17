@@ -10,7 +10,12 @@ import { validateField, validateForm } from '@/app/utils/validation';
 import { z } from 'zod';
 import RegionSelectionStep from './RegionSelectionStep';
 
-export default function FormStep({ onNext, onBack, projectType, formData: initialFormData }: FormStepProps) {
+export default function FormStep({
+  onNext,
+  onBack,
+  projectType,
+  formData: initialFormData,
+}: FormStepProps) {
   const [formData, setFormData] = useState<Record<string, any>>(initialFormData.formFields || {});
   const [questions, setQuestions] = useState<ProjectQuestion[]>([]);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -20,18 +25,22 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
   const [totalArea, setTotalArea] = useState(0);
   const [totalPrice, setTotalPrice] = useState(0);
 
-  const handleRegionSelection = (data: { regions: string[], totalArea: number, totalPrice: number }) => {
+  const handleRegionSelection = (data: {
+    regions: string[];
+    totalArea: number;
+    totalPrice: number;
+  }) => {
     setSelectedRegions(data.regions);
     setTotalArea(data.totalArea);
     setTotalPrice(data.totalPrice);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       regions: data.regions.join(','),
       totalArea: data.totalArea,
-      totalPrice: data.totalPrice
+      totalPrice: data.totalPrice,
     }));
     // Clear any existing region errors when selection is successful
-    setErrors(prev => {
+    setErrors((prev) => {
       const newErrors = { ...prev };
       delete newErrors.regions;
       return newErrors;
@@ -40,13 +49,12 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
   };
 
   useEffect(() => {
-    const projectKey = projectType.toLowerCase()
-      .replace('infrastructure', 'infra');
+    const projectKey = projectType.toLowerCase().replace('infrastructure', 'infra');
     setQuestions(PROJECT_QUESTIONS[projectKey] || []);
   }, [projectType]);
 
   const validateFieldValue = async (id: string, value: any) => {
-    const question = questions.find(q => q.id === id);
+    const question = questions.find((q) => q.id === id);
     if (!question) return;
 
     if (question.type === 'regions') {
@@ -66,29 +74,40 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
         break;
       case 'number':
         if (id === 'tps' || id === 'blockTime') {
-          schema = z.string()
+          schema = z
+            .string()
             .regex(/^\d+$/, 'Please enter a valid number')
-            .transform(val => parseInt(val, 10))
-            .refine(val => val > 0, 'Value must be greater than 0');
+            .transform((val) => parseInt(val, 10))
+            .refine((val) => val > 0, 'Value must be greater than 0');
         } else {
           schema = z.number().min(0, 'Value must be greater than 0');
         }
         break;
       case 'image':
-        schema = z.instanceof(File, { message: 'Please upload a logo' })
-          .refine(file => file.size <= 2 * 1024 * 1024, 'Logo must be less than 2MB')
+        schema = z
+          .instanceof(File, { message: 'Please upload a logo' })
+          .refine((file) => file.size <= 2 * 1024 * 1024, 'Logo must be less than 2MB')
           .refine(
-            file => ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'].includes(file.type),
+            (file) =>
+              ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'].includes(
+                file.type
+              ),
             'Logo must be a valid image file (JPG, PNG, GIF, WEBP, or SVG)'
           );
         break;
       case 'nativeToken':
-        schema = z.string()
-          .regex(/^[A-Z0-9$]{1,7}$/, 'Token symbol must be 1-7 characters (letters, numbers, $ only)')
-          .transform(val => val.toUpperCase());
+        schema = z
+          .string()
+          .regex(
+            /^[A-Z0-9$]{1,7}$/,
+            'Token symbol must be 1-7 characters (letters, numbers, $ only)'
+          )
+          .transform((val) => val.toUpperCase());
         break;
       case 'color':
-        schema = z.string().regex(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/, 'Please enter a valid hex color code');
+        schema = z
+          .string()
+          .regex(/^#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})$/, 'Please enter a valid hex color code');
         break;
       default:
         if (question.required) {
@@ -99,9 +118,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
     }
 
     const result = await validateField(value, schema, question.label);
-    setErrors(prev => ({
+    setErrors((prev) => ({
       ...prev,
-      [id]: result.error || ''
+      [id]: result.error || '',
     }));
     return result.isValid;
   };
@@ -111,9 +130,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
     value: any,
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
-    const question = questions.find(q => q.id === id);
+    const question = questions.find((q) => q.id === id);
     let processedValue = value;
-    
+
     if (question?.type === 'image') {
       processedValue = value as File;
     } else if (id === 'nativeToken') {
@@ -124,14 +143,12 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
         .slice(0, 7);
     } else if (id === 'tps' || id === 'blockTime') {
       // Only allow numbers, no scientific notation
-      processedValue = (value as string)
-        .replace(/[^0-9]/g, '')
-        .slice(0, 10); // Limit to 10 digits
+      processedValue = (value as string).replace(/[^0-9]/g, '').slice(0, 10); // Limit to 10 digits
     }
 
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [id]: processedValue
+      [id]: processedValue,
     }));
 
     await validateFieldValue(id, processedValue);
@@ -140,35 +157,35 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
   const calculatePrice = (regions: string[]) => {
     // All regions cost $0.4 per 1 million square km
     const regionAreas: { [key: string]: number } = {
-      'Finland': 338424,
-      'Sweden': 450295,
-      'Norway': 385207,
-      'Denmark': 43094,
-      'Iceland': 103000,
-      'Estonia': 45227,
-      'Latvia': 64589,
-      'Lithuania': 65300,
-      'Poland': 312696,
-      'Germany': 357022,
-      'Netherlands': 41543,
-      'Belgium': 30528,
-      'Luxembourg': 2586,
-      'France': 551695,
-      'Spain': 505990,
-      'Portugal': 92212,
-      'Italy': 301340,
-      'Switzerland': 41285,
-      'Austria': 83879,
+      Finland: 338424,
+      Sweden: 450295,
+      Norway: 385207,
+      Denmark: 43094,
+      Iceland: 103000,
+      Estonia: 45227,
+      Latvia: 64589,
+      Lithuania: 65300,
+      Poland: 312696,
+      Germany: 357022,
+      Netherlands: 41543,
+      Belgium: 30528,
+      Luxembourg: 2586,
+      France: 551695,
+      Spain: 505990,
+      Portugal: 92212,
+      Italy: 301340,
+      Switzerland: 41285,
+      Austria: 83879,
       'Czech Republic': 78867,
-      'Slovakia': 49035,
-      'Hungary': 93030,
-      'Slovenia': 20273,
-      'Croatia': 56594,
-      'Romania': 238397,
-      'Bulgaria': 110879,
-      'Greece': 131957,
-      'Albania': 28748,
-      'North Macedonia': 25713
+      Slovakia: 49035,
+      Hungary: 93030,
+      Slovenia: 20273,
+      Croatia: 56594,
+      Romania: 238397,
+      Bulgaria: 110879,
+      Greece: 131957,
+      Albania: 28748,
+      'North Macedonia': 25713,
     };
 
     const totalArea = regions.reduce((sum, region) => sum + (regionAreas[region] || 0), 0);
@@ -181,7 +198,7 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
 
     try {
       // Validate all required fields first
-      const requiredFields = questions.filter(q => q.required);
+      const requiredFields = questions.filter((q) => q.required);
       const validationErrors: Record<string, string> = {};
 
       for (const field of requiredFields) {
@@ -205,9 +222,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
       // Validate regions for blockchain projects
       if (projectType.toLowerCase() === 'blockchain') {
         if (!selectedRegions.length) {
-          setErrors(prev => ({
+          setErrors((prev) => ({
             ...prev,
-            regions: 'Please select at least one region'
+            regions: 'Please select at least one region',
           }));
           setIsSubmitting(false);
           return;
@@ -219,9 +236,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
           blockchain: projectType.toLowerCase() === 'blockchain' ? 'blockchain' : 'base',
           formFields: {
             ...formData,
-            totalPrice: formData.totalPrice
+            totalPrice: formData.totalPrice,
           },
-          regions: selectedRegions
+          regions: selectedRegions,
         };
         onNext(formDataToSubmit);
       } else {
@@ -230,7 +247,7 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
           type: projectType,
           blockchain: 'base',
           formFields: formData,
-          regions: []
+          regions: [],
         };
         onNext(formDataToSubmit);
       }
@@ -246,7 +263,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
     const commonProps = {
       id: question.id,
       value: value || '',
-      onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+      onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+      ) => {
         handleFieldChange(question.id, e.target.value, e);
       },
       className: `mt-1 block w-full rounded-md bg-[#1a1b1e] border ${
@@ -269,7 +288,11 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
               className="flex items-center gap-2 w-full px-4 py-2 rounded-lg bg-zinc-800 text-white placeholder-zinc-400 focus:outline-none focus:ring-2 focus:ring-red-500 border-zinc-700 hover:bg-zinc-700"
             >
               <MapIcon className="w-5 h-5" />
-              <span>{Array.isArray(selectedRegions) && selectedRegions.length > 0 ? selectedRegions.join(', ') : question.placeholder}</span>
+              <span>
+                {Array.isArray(selectedRegions) && selectedRegions.length > 0
+                  ? selectedRegions.join(', ')
+                  : question.placeholder}
+              </span>
             </button>
             {selectedRegions.length > 0 && (
               <div className="bg-zinc-800/50 p-3 rounded-lg space-y-2 text-sm">
@@ -288,10 +311,7 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
       case 'textarea':
         return (
           <div className="space-y-1">
-            <textarea
-              {...commonProps}
-              rows={4}
-            />
+            <textarea {...commonProps} rows={4} />
             {question.id === 'about' && (
               <div className="text-xs text-zinc-400 text-right">
                 {(value as string)?.length || 0}/550 characters
@@ -312,10 +332,12 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
               backgroundRepeat: 'no-repeat',
               backgroundPosition: 'right 0.5rem center',
               backgroundSize: '1.5em 1.5em',
-              paddingRight: '2.5rem'
+              paddingRight: '2.5rem',
             }}
           >
-            <option value="" className="bg-[#1a1b1e] text-zinc-200">Select an option</option>
+            <option value="" className="bg-[#1a1b1e] text-zinc-200">
+              Select an option
+            </option>
             {question.options?.map((option) => (
               <option key={option} value={option} className="bg-[#1a1b1e] text-zinc-200">
                 {option}
@@ -332,7 +354,7 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
               onChange={(e) => {
                 const file = e.target.files?.[0];
                 if (file) {
-                  setFormData(prev => ({ ...prev, [question.id]: file }));
+                  setFormData((prev) => ({ ...prev, [question.id]: file }));
                   validateFieldValue(question.id, file);
                 }
               }}
@@ -340,7 +362,9 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
                 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-medium
                 file:bg-primary file:text-zinc-200 hover:file:bg-primary/90 cursor-pointer`}
             />
-            <p className="text-xs text-zinc-400">Accepted formats: JPG, PNG, GIF, WEBP, SVG (max 2MB)</p>
+            <p className="text-xs text-zinc-400">
+              Accepted formats: JPG, PNG, GIF, WEBP, SVG (max 2MB)
+            </p>
           </div>
         );
       case 'color':
@@ -355,12 +379,7 @@ export default function FormStep({ onNext, onBack, projectType, formData: initia
           </div>
         );
       default:
-        return (
-          <input
-            {...commonProps}
-            type={question.type}
-          />
-        );
+        return <input {...commonProps} type={question.type} />;
     }
   };
 

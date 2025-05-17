@@ -16,14 +16,14 @@ const projectTypes = [
   { name: 'DAO', color: 'bg-violet-500' },
   { name: 'Social', color: 'bg-pink-500' },
   { name: 'AI', color: 'bg-cyan-500' },
-  { name: 'Other', color: 'bg-zinc-500' }
+  { name: 'Other', color: 'bg-zinc-500' },
 ];
 
 export default function ProjectTypeStep({ onNext, onBack }: StepProps) {
   const [search, setSearch] = useState('');
   const [selectedType, setSelectedType] = useState('');
 
-  const filteredTypes = projectTypes.filter(type =>
+  const filteredTypes = projectTypes.filter((type) =>
     type.name.toLowerCase().includes(search.toLowerCase())
   );
 

@@ -23,7 +23,7 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
   const { switchChain } = useSwitchChain();
   const { data: balance } = useBalance({
     address,
-    chainId: baseSepolia.id
+    chainId: baseSepolia.id,
   });
   const [isWalletDropdownOpen, setIsWalletDropdownOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
@@ -37,7 +37,7 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
         try {
           const provider = new ethers.BrowserProvider(window.ethereum);
           const contractAddress = process.env.NEXT_PUBLIC_PROJECT_REGISTRY_ADDRESS;
-          
+
           if (!contractAddress) {
             throw new Error('Contract address is not configured');
           }
@@ -48,9 +48,10 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
 
           // Check if selected regions are available
           if (data?.regions && Array.isArray(data.regions) && data.regions.length > 0) {
-            const validRegions = data.regions
-              .filter((name: any): name is string => typeof name === 'string' && name.trim() !== '');
-            
+            const validRegions = data.regions.filter(
+              (name: any): name is string => typeof name === 'string' && name.trim() !== ''
+            );
+
             if (validRegions.length > 0) {
               console.log('Checking region availability for:', validRegions);
               try {
@@ -83,11 +84,12 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
       isLoading,
       hasContract: !!contract,
       hasRegions: regions.length > 0,
-      hasTotalPrice: typeof data?.formFields?.totalPrice === 'number' && data.formFields.totalPrice > 0,
+      hasTotalPrice:
+        typeof data?.formFields?.totalPrice === 'number' && data.formFields.totalPrice > 0,
       hasError: !!error,
       regions: regions,
       totalPrice: data?.formFields?.totalPrice,
-      error: error
+      error: error,
     };
     console.log('Button state:', JSON.stringify(buttonState, null, 2));
   }, [isLoading, contract, data?.regions, data?.formFields?.totalPrice, error]);
@@ -96,15 +98,15 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
   useEffect(() => {
     if (data?.regions) {
       // Handle both array and comma-separated string cases
-      const regions = Array.isArray(data.regions) 
-        ? data.regions 
-        : typeof data.regions === 'string' 
+      const regions = Array.isArray(data.regions)
+        ? data.regions
+        : typeof data.regions === 'string'
           ? data.regions.split(',').map((r: string) => r.trim())
           : [data.regions].filter(Boolean);
 
       console.log('Using price and area from map selection:', {
         totalPrice: data.formFields?.totalPrice,
-        totalArea: data.formFields?.totalArea
+        totalArea: data.formFields?.totalArea,
       });
     }
   }, [data?.regions]);
@@ -115,19 +117,21 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
       try {
         setIsLoadingPrice(true);
         // Add a small delay before each attempt
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd');
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+
+        const response = await fetch(
+          'https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd'
+        );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const data = await response.json();
         console.log('CoinGecko response:', data);
-        
+
         if (!data?.ethereum?.usd) {
           throw new Error('Invalid price data received');
         }
-        
+
         console.log('Fetched ETH price:', data.ethereum.usd);
         setEthPrice(data.ethereum.usd);
       } catch (error) {
@@ -150,16 +154,16 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
     try {
       // Connect first
       await connect({ connector });
-      
+
       // Then force switch to Base Sepolia
       try {
-        await switchChain({ 
-          chainId: baseSepolia.id
+        await switchChain({
+          chainId: baseSepolia.id,
         });
       } catch (error) {
         console.error('Failed to switch chain:', error);
       }
-      
+
       setIsWalletDropdownOpen(false);
     } catch (error) {
       console.error('Failed to connect:', error);
@@ -169,12 +173,12 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
   const uploadToLighthouse = async (data: any) => {
     try {
       console.log('Starting Lighthouse upload with data:', data);
-      
+
       const apiKey = process.env.NEXT_PUBLIC_LIGHTHOUSE_API_KEY;
       if (!apiKey) {
         throw new Error('Lighthouse API key is not configured');
       }
-      
+
       // Handle image upload if it exists
       let imageCID = null;
       if (data.logo instanceof File) {
@@ -182,41 +186,34 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
         // Convert File to Buffer
         const arrayBuffer = await data.logo.arrayBuffer();
         const buffer = Buffer.from(arrayBuffer);
-        
-        const imageResponse = await lighthouse.uploadBuffer(
-          buffer,
-          apiKey
-        );
+
+        const imageResponse = await lighthouse.uploadBuffer(buffer, apiKey);
         console.log('Image upload response:', imageResponse);
-        
+
         if (!imageResponse.data || !imageResponse.data.Hash) {
           throw new Error('Invalid response from Lighthouse for image upload');
         }
-        
+
         imageCID = imageResponse.data.Hash;
       }
-      
+
       // Prepare data for JSON upload
       const uploadData = {
         ...data,
         logo: imageCID || data.logo,
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
       };
-      
+
       // Create filename based on project type and name
       const fileName = `${data.projectType}-${data.name?.toLowerCase().replace(/\s+/g, '-') || 'project'}`;
-      
+
       // Convert data to JSON string
       const jsonData = JSON.stringify(uploadData, null, 2);
       console.log('JSON data to upload:', jsonData);
-      
+
       // Upload JSON to Lighthouse
       console.log(`Starting upload for ${fileName}...`);
-      const response = await lighthouse.uploadText(
-        jsonData,
-        apiKey,
-        fileName
-      );
+      const response = await lighthouse.uploadText(jsonData, apiKey, fileName);
       console.log('Lighthouse upload response:', response);
 
       if (!response.data || !response.data.Hash) {
@@ -228,15 +225,17 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
 
       return {
         ...response.data,
-        imageCID
+        imageCID,
       };
     } catch (err) {
       console.error('Detailed Lighthouse upload error:', {
         error: err,
         message: err instanceof Error ? err.message : 'Unknown error',
-        stack: err instanceof Error ? err.stack : undefined
+        stack: err instanceof Error ? err.stack : undefined,
       });
-      throw new Error(`Failed to upload project data: ${err instanceof Error ? err.message : 'Unknown error'}`);
+      throw new Error(
+        `Failed to upload project data: ${err instanceof Error ? err.message : 'Unknown error'}`
+      );
     }
   };
 
@@ -244,51 +243,125 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
     // All regions cost $0.4 per 1 million square km
     const regionAreas: { [key: string]: number } = {
       // Europe
-      'Finland': 338424, 'Sweden': 450295, 'Norway': 385207, 'Denmark': 43094,
-      'Iceland': 103000, 'Estonia': 45227, 'Latvia': 64589, 'Lithuania': 65300,
-      'Poland': 312696, 'Germany': 357022, 'Netherlands': 41543, 'Belgium': 30528,
-      'Luxembourg': 2586, 'France': 551695, 'Spain': 505990, 'Portugal': 92212,
-      'Italy': 301340, 'Switzerland': 41285, 'Austria': 83879, 'Czech Republic': 78867,
-      'Slovakia': 49035, 'Hungary': 93030, 'Slovenia': 20273, 'Croatia': 56594,
-      'Romania': 238397, 'Bulgaria': 110879, 'Greece': 131957, 'Albania': 28748,
+      Finland: 338424,
+      Sweden: 450295,
+      Norway: 385207,
+      Denmark: 43094,
+      Iceland: 103000,
+      Estonia: 45227,
+      Latvia: 64589,
+      Lithuania: 65300,
+      Poland: 312696,
+      Germany: 357022,
+      Netherlands: 41543,
+      Belgium: 30528,
+      Luxembourg: 2586,
+      France: 551695,
+      Spain: 505990,
+      Portugal: 92212,
+      Italy: 301340,
+      Switzerland: 41285,
+      Austria: 83879,
+      'Czech Republic': 78867,
+      Slovakia: 49035,
+      Hungary: 93030,
+      Slovenia: 20273,
+      Croatia: 56594,
+      Romania: 238397,
+      Bulgaria: 110879,
+      Greece: 131957,
+      Albania: 28748,
       'North Macedonia': 25713,
       // North America
-      'Canada': 9984670, 'United States': 9833517, 'Mexico': 1964375,
+      Canada: 9984670,
+      'United States': 9833517,
+      Mexico: 1964375,
       // South America
-      'Brazil': 8515770, 'Argentina': 2780400, 'Colombia': 1141748,
-      'Peru': 1285216, 'Venezuela': 916445, 'Chile': 756102,
-      'Ecuador': 283561, 'Bolivia': 1098581, 'Paraguay': 406752,
-      'Uruguay': 181034, 'Guyana': 214969, 'Suriname': 163820,
+      Brazil: 8515770,
+      Argentina: 2780400,
+      Colombia: 1141748,
+      Peru: 1285216,
+      Venezuela: 916445,
+      Chile: 756102,
+      Ecuador: 283561,
+      Bolivia: 1098581,
+      Paraguay: 406752,
+      Uruguay: 181034,
+      Guyana: 214969,
+      Suriname: 163820,
       'French Guiana': 83534,
       // Asia
-      'China': 9596961, 'India': 3287263, 'Japan': 377975,
-      'South Korea': 100210, 'North Korea': 120538, 'Vietnam': 331212,
-      'Thailand': 513120, 'Myanmar': 676578, 'Malaysia': 330803,
-      'Indonesia': 1904569, 'Philippines': 300000, 'Cambodia': 181035,
-      'Laos': 236800, 'Singapore': 719, 'Brunei': 5765,
+      China: 9596961,
+      India: 3287263,
+      Japan: 377975,
+      'South Korea': 100210,
+      'North Korea': 120538,
+      Vietnam: 331212,
+      Thailand: 513120,
+      Myanmar: 676578,
+      Malaysia: 330803,
+      Indonesia: 1904569,
+      Philippines: 300000,
+      Cambodia: 181035,
+      Laos: 236800,
+      Singapore: 719,
+      Brunei: 5765,
       'East Timor': 14874,
       // Africa
-      'South Africa': 1221037, 'Egypt': 1002450, 'Nigeria': 923768,
-      'Algeria': 2381741, 'Sudan': 1886068, 'Libya': 1759540,
-      'Morocco': 446550, 'Ethiopia': 1104300, 'Somalia': 637657,
-      'Kenya': 580367, 'Tanzania': 947303, 'Uganda': 241550,
-      'Ghana': 238533, 'Mali': 1240192, 'Niger': 1267000,
-      'Chad': 1284000, 'Angola': 1246700, 'Mozambique': 801590,
-      'Zambia': 752618, 'Zimbabwe': 390757, 'Madagascar': 587041,
-      'Botswana': 581730, 'Namibia': 825615, 'Senegal': 196722,
-      'Guinea': 245857, 'Côte d\'Ivoire': 322463, 'Cameroon': 475442,
-      'Democratic Republic of the Congo': 2344858, 'Republic of the Congo': 342000,
-      'Central African Republic': 622984, 'South Sudan': 644329,
-      'Burundi': 27834, 'Rwanda': 26338, 'Eritrea': 117600,
-      'Djibouti': 23200, 'Comoros': 2235, 'Mauritius': 2040,
-      'Seychelles': 455, 'São Tomé and Príncipe': 964,
-      'Gabon': 267668,
+      'South Africa': 1221037,
+      Egypt: 1002450,
+      Nigeria: 923768,
+      Algeria: 2381741,
+      Sudan: 1886068,
+      Libya: 1759540,
+      Morocco: 446550,
+      Ethiopia: 1104300,
+      Somalia: 637657,
+      Kenya: 580367,
+      Tanzania: 947303,
+      Uganda: 241550,
+      Ghana: 238533,
+      Mali: 1240192,
+      Niger: 1267000,
+      Chad: 1284000,
+      Angola: 1246700,
+      Mozambique: 801590,
+      Zambia: 752618,
+      Zimbabwe: 390757,
+      Madagascar: 587041,
+      Botswana: 581730,
+      Namibia: 825615,
+      Senegal: 196722,
+      Guinea: 245857,
+      "Côte d'Ivoire": 322463,
+      Cameroon: 475442,
+      'Democratic Republic of the Congo': 2344858,
+      'Republic of the Congo': 342000,
+      'Central African Republic': 622984,
+      'South Sudan': 644329,
+      Burundi: 27834,
+      Rwanda: 26338,
+      Eritrea: 117600,
+      Djibouti: 23200,
+      Comoros: 2235,
+      Mauritius: 2040,
+      Seychelles: 455,
+      'São Tomé and Príncipe': 964,
+      Gabon: 267668,
       // Oceania
-      'Australia': 7692024, 'New Zealand': 268021, 'Papua New Guinea': 462840,
-      'Fiji': 18274, 'Solomon Islands': 28896, 'Vanuatu': 12189,
-      'Samoa': 2842, 'Kiribati': 811, 'Micronesia': 702,
-      'Marshall Islands': 181, 'Palau': 459, 'Nauru': 21,
-      'Tuvalu': 26
+      Australia: 7692024,
+      'New Zealand': 268021,
+      'Papua New Guinea': 462840,
+      Fiji: 18274,
+      'Solomon Islands': 28896,
+      Vanuatu: 12189,
+      Samoa: 2842,
+      Kiribati: 811,
+      Micronesia: 702,
+      'Marshall Islands': 181,
+      Palau: 459,
+      Nauru: 21,
+      Tuvalu: 26,
     };
 
     const totalArea = regions.reduce((sum, region) => {
@@ -299,7 +372,7 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
 
     const totalPrice = (totalArea / 1000000) * 0.4;
     console.log(`Total area: ${totalArea} km², Total price: $${totalPrice}`);
-    
+
     return totalPrice;
   };
 
@@ -333,33 +406,33 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
         usd: priceInUsd,
         ethPrice: ethPrice,
         eth: priceInEth,
-        totalArea: data.formFields?.totalArea
+        totalArea: data.formFields?.totalArea,
       });
 
       // Convert to Wei using BigInt
       const weiAmount = BigInt(Math.floor(priceInEth * 1e18));
       const priceInWei = weiAmount;
-      
+
       console.log('Conversion details:', {
         ethAmount: priceInEth,
         weiAmount: weiAmount.toString(),
-        priceInWei: priceInWei.toString()
+        priceInWei: priceInWei.toString(),
       });
 
       // 2. Register project with contract
       const provider = new ethers.BrowserProvider(window.ethereum);
       const signer = await provider.getSigner();
-      
+
       try {
         // Split regions if they're comma-separated
-        const regions = Array.isArray(data.regions) 
-          ? data.regions 
-          : typeof data.regions === 'string' 
+        const regions = Array.isArray(data.regions)
+          ? data.regions
+          : typeof data.regions === 'string'
             ? data.regions.split(',').map((r: string) => r.trim())
             : [data.regions].filter(Boolean);
 
         console.log('Registering project with regions:', regions);
-        
+
         const tx = await contract.registerProject(
           data.name,
           data.projectType,
@@ -428,13 +501,15 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
               <motion.div
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
-                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                transition={{ type: 'spring', stiffness: 200, damping: 10 }}
                 className="mx-auto w-16 h-16 text-green-500 mb-4"
               >
                 <CheckCircleIcon className="w-full h-full" />
               </motion.div>
               <h3 className="text-2xl font-bold text-white mb-2">Welcome to Zenith!</h3>
-              <p className="text-white/70">Your project is now part of the decentralized mapping revolution.</p>
+              <p className="text-white/70">
+                Your project is now part of the decentralized mapping revolution.
+              </p>
             </motion.div>
           </motion.div>
         )}
@@ -473,7 +548,9 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
               }
               return (
                 <div key={key} className="grid grid-cols-3">
-                  <dt className="text-zinc-400 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}</dt>
+                  <dt className="text-zinc-400 capitalize">
+                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                  </dt>
                   <dd className="col-span-2">{formatValue(key, value)}</dd>
                 </div>
               );
@@ -493,16 +570,16 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
                   </div>
                 ))
               ) : (
-                <div className="text-sm">
-                  {data.regions}
-                </div>
+                <div className="text-sm">{data.regions}</div>
               )}
             </div>
             {data.formFields?.totalArea && (
               <div className="mt-4 pt-4 border-t border-white/10">
                 <div className="flex justify-between text-sm">
                   <span className="text-zinc-400">Total Area:</span>
-                  <span className="text-white">{data.formFields.totalArea.toLocaleString()} km²</span>
+                  <span className="text-white">
+                    {data.formFields.totalArea.toLocaleString()} km²
+                  </span>
                 </div>
                 <div className="flex justify-between text-sm mt-2">
                   <span className="text-zinc-400">Estimated Cost:</span>
@@ -522,9 +599,7 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
         </div>
       </div>
 
-      {error && (
-        <p className="text-red-500 text-sm">{error}</p>
-      )}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
 
       <div className="flex justify-between">
         <button
@@ -538,10 +613,11 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
           <button
             onClick={handleSubmit}
             disabled={
-              isLoading || 
-              !contract || 
-              !data?.regions || 
-              (typeof data?.formFields?.totalPrice !== 'number' || data.formFields.totalPrice <= 0) || 
+              isLoading ||
+              !contract ||
+              !data?.regions ||
+              typeof data?.formFields?.totalPrice !== 'number' ||
+              data.formFields.totalPrice <= 0 ||
               !!error
             }
             className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50"

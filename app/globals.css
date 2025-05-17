@@ -17,10 +17,10 @@
   border-radius: 8px;
   background: linear-gradient(
     45deg,
-    rgba(255, 59, 48, 0.2),  /* Red */
-    rgba(88, 86, 214, 0.2),  /* Indigo */
-    rgba(255, 149, 0, 0.2),  /* Orange */
-    rgba(52, 199, 89, 0.2)   /* Green */
+    rgba(255, 59, 48, 0.2),
+    /* Red */ rgba(88, 86, 214, 0.2),
+    /* Indigo */ rgba(255, 149, 0, 0.2),
+    /* Orange */ rgba(52, 199, 89, 0.2) /* Green */
   );
   background-size: 200% 200%;
   animation: borderGradient 8s ease infinite;
@@ -29,15 +29,21 @@
 }
 
 @keyframes borderGradient {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 /* Hide scrollbar but keep functionality */
 .scrollbar-hide {
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
 .scrollbar-hide::-webkit-scrollbar {
@@ -82,7 +88,8 @@ body {
 }
 
 /* Ensure the app takes full height */
-html, body {
+html,
+body {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -152,12 +159,13 @@ html, body {
 
 @layer base {
   :root {
-    --primary: #FF0000;
+    --primary: #ff0000;
     --secondary: #151515;
-    --accent: #FF0000;
+    --accent: #ff0000;
   }
 
-  html, body {
+  html,
+  body {
     @apply bg-black text-white;
     background-color: var(--background) !important;
     touch-action: manipulation;
@@ -177,11 +185,11 @@ html, body {
   .nav-link {
     @apply px-4 py-2 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors;
   }
-  
+
   .btn-primary {
     @apply px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors;
   }
-  
+
   .btn-secondary {
     @apply px-4 py-2 bg-secondary text-foreground rounded-md hover:bg-secondary/90 transition-colors;
   }

@@ -17,7 +17,7 @@ export default function Navigation() {
   const { switchChain } = useSwitchChain();
   const [isWalletDropdownOpen, setIsWalletDropdownOpen] = useState(false);
   const [showDisconnectModal, setShowDisconnectModal] = useState(false);
-  
+
   const openRegistrationModal = () => {
     setIsMenuOpen(false);
     openModal();
@@ -28,16 +28,16 @@ export default function Navigation() {
     try {
       // Connect first
       await connect({ connector });
-      
+
       // Then force switch to Base Sepolia
       try {
-        await switchChain({ 
-          chainId: baseSepolia.id
+        await switchChain({
+          chainId: baseSepolia.id,
         });
       } catch (error) {
         console.error('Failed to switch chain:', error);
       }
-      
+
       setIsWalletDropdownOpen(false);
     } catch (error) {
       console.error('Failed to connect:', error);
@@ -63,16 +63,10 @@ export default function Navigation() {
             <Link href="/explore" className="nav-link">
               Explore
             </Link>
-            <button 
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="nav-link"
-            >
+            <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="nav-link">
               Search
             </button>
-            <button
-              onClick={openRegistrationModal}
-              className="nav-link"
-            >
+            <button onClick={openRegistrationModal} className="nav-link">
               Join
             </button>
             <Link href="/about" className="nav-link">
@@ -81,7 +75,7 @@ export default function Navigation() {
             <div className="relative">
               {isConnected ? (
                 <div className="relative">
-                  <button 
+                  <button
                     onClick={() => setShowDisconnectModal(true)}
                     className="bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
                   >
@@ -128,28 +122,20 @@ export default function Navigation() {
             <Link href="/explore" className="nav-link">
               Explore
             </Link>
-            <button 
-              onClick={() => setIsSearchOpen(!isSearchOpen)}
-              className="nav-link"
-            >
+            <button onClick={() => setIsSearchOpen(!isSearchOpen)} className="nav-link">
               Search
             </button>
-            
-            <button 
+
+            <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="p-2 hover:bg-white/10 rounded-lg transition-colors"
             >
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d={isMenuOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"}
+                  d={isMenuOpen ? 'M6 18L18 6M6 6l12 12' : 'M4 6h16M4 12h16M4 18h16'}
                 />
               </svg>
             </button>
@@ -172,8 +158,8 @@ export default function Navigation() {
                 >
                   Join
                 </button>
-                <Link 
-                  href="/about" 
+                <Link
+                  href="/about"
                   className="block nav-link hover:text-primary transition-colors"
                   onClick={() => setIsMenuOpen(false)}
                 >
@@ -181,7 +167,7 @@ export default function Navigation() {
                 </Link>
                 <div className="w-full">
                   {isConnected ? (
-                    <button 
+                    <button
                       onClick={() => setShowDisconnectModal(true)}
                       className="bg-primary text-white w-full px-3 py-1.5 rounded-lg hover:bg-primary/90 transition-colors text-sm"
                     >
@@ -224,7 +210,6 @@ export default function Navigation() {
             </motion.div>
           )}
         </AnimatePresence>
-
       </nav>
 
       {/* Disconnect Modal */}
@@ -242,10 +227,12 @@ export default function Navigation() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.95, opacity: 0 }}
               className="fixed left-4 right-4 top-[50%] -translate-y-1/2 md:left-1/2 md:-translate-x-1/2 md:w-[calc(100%-2rem)] md:max-w-sm p-4 md:p-6 rounded-lg border border-white/10 bg-black/80 backdrop-blur-md"
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
             >
               <h3 className="text-lg font-semibold text-white mb-3 md:mb-4">Disconnect Wallet</h3>
-              <p className="text-white/70 mb-4 md:mb-6 text-sm md:text-base">Are you sure you want to disconnect your wallet?</p>
+              <p className="text-white/70 mb-4 md:mb-6 text-sm md:text-base">
+                Are you sure you want to disconnect your wallet?
+              </p>
               <div className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-4">
                 <button
                   onClick={() => setShowDisconnectModal(false)}
@@ -288,4 +275,4 @@ export default function Navigation() {
       </AnimatePresence>
     </div>
   );
-} 
+}

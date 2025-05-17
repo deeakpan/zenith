@@ -11,23 +11,23 @@ const features = [
   {
     icon: MapIcon,
     title: 'Claim Your Territory',
-    description: 'Blockchains can claim regions on the map to establish their presence'
+    description: 'Blockchains can claim regions on the map to establish their presence',
   },
   {
     icon: ChartBarIcon,
     title: 'Showcase Projects',
-    description: 'Register your project within blockchain territories'
+    description: 'Register your project within blockchain territories',
   },
   {
     icon: WalletIcon,
     title: 'Connect & Verify',
-    description: 'Use your wallet to verify ownership and manage your presence'
+    description: 'Use your wallet to verify ownership and manage your presence',
   },
   {
     icon: GlobeAltIcon,
     title: 'Global Visibility',
-    description: 'Make your project visible to users worldwide'
-  }
+    description: 'Make your project visible to users worldwide',
+  },
 ];
 
 export default function IntroductionStep({ onNext }: Props) {

@@ -12,19 +12,8 @@ export interface Project {
   regions: string[];
 }
 
-interface ProjectRegistryContract extends ethers.Contract {
-  registerProject(
-    name: string,
-    projectType: string,
-    imageCID: string,
-    dataCID: string,
-    regions: string[],
-    overrides?: { value: bigint }
-  ): Promise<ethers.ContractTransactionResponse>;
-}
-
 export class ProjectRegistryContract {
-  private contract: ProjectRegistryContract;
+  private contract: ethers.Contract;
 
   constructor(address: string, provider: ethers.Provider) {
     if (!ProjectRegistryABI) {
@@ -36,7 +25,7 @@ export class ProjectRegistryContract {
         address,
         ProjectRegistryABI,
         provider
-      ) as ProjectRegistryContract;
+      );
     } catch (error) {
       console.error('Error initializing contract:', error);
       throw new Error('Failed to initialize contract with provided ABI');
@@ -91,4 +80,4 @@ export class ProjectRegistryContract {
     }
     return this.contract.areRegionsAvailable(regions);
   }
-} 
+}

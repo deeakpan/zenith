@@ -7,16 +7,20 @@ export const numberSchema = z.number().min(0, 'Value must be greater than 0');
 
 // Project validation schemas
 export const projectBaseSchema = z.object({
-  name: z.string()
+  name: z
+    .string()
     .min(2, 'Name must be at least 2 characters')
     .max(50, 'Name must be less than 50 characters'),
-  logo: z.instanceof(File, { message: 'Please upload a logo' })
-    .refine(file => file.size <= 2 * 1024 * 1024, 'Logo must be less than 2MB')
+  logo: z
+    .instanceof(File, { message: 'Please upload a logo' })
+    .refine((file) => file.size <= 2 * 1024 * 1024, 'Logo must be less than 2MB')
     .refine(
-      file => ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'].includes(file.type),
+      (file) =>
+        ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'].includes(file.type),
       'Logo must be a valid image file (JPG, PNG, GIF, WEBP, or SVG)'
     ),
-  about: z.string()
+  about: z
+    .string()
     .min(50, 'Description must be at least 50 characters')
     .max(500, 'Description must be less than 500 characters'),
   website: urlSchema.optional(),
@@ -30,7 +34,8 @@ export const blockchainSchema = projectBaseSchema.extend({
   consensus: z.enum(['Proof of Stake', 'Proof of Work', 'Proof of Authority', 'Other']),
   tps: numberSchema,
   blockTime: numberSchema,
-  nativeToken: z.string()
+  nativeToken: z
+    .string()
     .min(1, 'Please enter a token symbol')
     .max(10, 'Token symbol must be less than 10 characters'),
   themeColor: z.string().regex(/^#[0-9A-Fa-f]{6}$/, 'Please enter a valid hex color'),
@@ -59,10 +64,9 @@ export const oracleSchema = projectBaseSchema.extend({
   type: z.enum(['Price Feed', 'Random Number', 'Weather', 'Sports', 'Other']),
   otherType: z.string().optional(),
   updateFrequency: z.enum(['Real-time', 'Every minute', 'Every hour', 'Daily', 'Other']),
-  supportedNetworks: z.union([
-    z.string().transform(val => [val]),
-    z.array(z.string())
-  ]).refine(val => val.length > 0, 'Please select at least one network'),
+  supportedNetworks: z
+    .union([z.string().transform((val) => [val]), z.array(z.string())])
+    .refine((val) => val.length > 0, 'Please select at least one network'),
 });
 
 // Validation helper functions
@@ -78,12 +82,12 @@ export const validateField = async (
     if (error instanceof z.ZodError) {
       return {
         isValid: false,
-        error: error.errors[0].message
+        error: error.errors[0].message,
       };
     }
     return {
       isValid: false,
-      error: `Invalid ${fieldName}`
+      error: `Invalid ${fieldName}`,
     };
   }
 };
@@ -103,7 +107,7 @@ export const validateForm = async (
   if (!schema) {
     return {
       isValid: false,
-      errors: { _form: 'Invalid project type' }
+      errors: { _form: 'Invalid project type' },
     };
   }
 
@@ -113,7 +117,7 @@ export const validateForm = async (
   } catch (error) {
     if (error instanceof z.ZodError) {
       const errors: Record<string, string> = {};
-      error.errors.forEach(err => {
+      error.errors.forEach((err) => {
         const path = err.path.join('.');
         errors[path] = err.message;
       });
@@ -121,7 +125,7 @@ export const validateForm = async (
     }
     return {
       isValid: false,
-      errors: { _form: 'Validation failed' }
+      errors: { _form: 'Validation failed' },
     };
   }
-}; 
+};

@@ -1,7 +1,18 @@
 export interface ProjectQuestion {
   id: string;
   label: string;
-  type: 'text' | 'textarea' | 'email' | 'url' | 'select' | 'radio' | 'number' | 'regions' | 'multiselect' | 'image' | 'color';
+  type:
+    | 'text'
+    | 'textarea'
+    | 'email'
+    | 'url'
+    | 'select'
+    | 'radio'
+    | 'number'
+    | 'regions'
+    | 'multiselect'
+    | 'image'
+    | 'color';
   required?: boolean;
   placeholder?: string;
   options?: string[];

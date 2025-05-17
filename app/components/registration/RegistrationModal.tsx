@@ -26,7 +26,7 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
     type: '',
     blockchain: '',
     formFields: {},
-    regions: []
+    regions: [],
   });
 
   const handleNext = (data: any) => {
@@ -54,7 +54,7 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
         console.log('Form submitted:', {
           projectType,
           chain,
-          formData
+          formData,
         });
         onClose();
         break;
@@ -95,10 +95,7 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
           exit={{ opacity: 0 }}
           className="fixed inset-0 z-[99999] flex items-start md:items-start justify-center md:mt-12 mt-0"
         >
-          <div
-            className="absolute inset-0"
-            onClick={onClose}
-          />
+          <div className="absolute inset-0" onClick={onClose} />
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -114,67 +111,60 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
                   <XMarkIcon className="w-5 h-5" />
                 </button>
 
-              <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent rounded-xl pointer-events-none" />
-              <div className="flex items-baseline gap-3 mb-3">
-                <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-red-500 via-red-400 to-red-500 bg-clip-text text-transparent tracking-wide">
-                  ZENITH
-                </h1>
-                <span className="text-sm font-medium text-zinc-500 tracking-widest uppercase">map</span>
-              </div>
-              <p className="text-sm md:text-base text-zinc-300 mb-6 leading-relaxed">
-                Your portal to the world of decentralized projects, chains, and regions. Explore, discover, and connect with the global blockchain ecosystem—all visualized on a beautiful interactive map.
-              </p>
+                <div className="absolute inset-0 bg-gradient-to-b from-primary/10 to-transparent rounded-xl pointer-events-none" />
+                <div className="flex items-baseline gap-3 mb-3">
+                  <h1 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-red-500 via-red-400 to-red-500 bg-clip-text text-transparent tracking-wide">
+                    ZENITH
+                  </h1>
+                  <span className="text-sm font-medium text-zinc-500 tracking-widest uppercase">
+                    map
+                  </span>
+                </div>
+                <p className="text-sm md:text-base text-zinc-300 mb-6 leading-relaxed">
+                  Your portal to the world of decentralized projects, chains, and regions. Explore,
+                  discover, and connect with the global blockchain ecosystem—all visualized on a
+                  beautiful interactive map.
+                </p>
 
-              <AnimatePresence mode="wait">
-                {step === 'intro' && (
-                  <IntroductionStep
-                    key="intro"
-                    onNext={() => handleNext(null)}
-                  />
-                )}
-                {step === 'project' && (
-                  <ProjectTypeStep
-                    key="project"
-                    onNext={handleNext}
-                    onBack={handleBack}
-                  />
-                )}
-                {step === 'blockchain' && (
-                  <BlockchainSelectionStep
-                    key="blockchain"
-                    onNext={handleNext}
-                    onBack={handleBack}
-                  />
-                )}
-                {step === 'chain' && (
-                  <ChainSelectionStep
-                    key="chain"
-                    onNext={handleNext}
-                    onBack={handleBack}
-                  />
-                )}
-                {step === 'form' && (
-                  <FormStep
-                    key="form"
-                    onNext={handleNext}
-                    onBack={handleBack}
-                    projectType={projectType}
+                <AnimatePresence mode="wait">
+                  {step === 'intro' && (
+                    <IntroductionStep key="intro" onNext={() => handleNext(null)} />
+                  )}
+                  {step === 'project' && (
+                    <ProjectTypeStep key="project" onNext={handleNext} onBack={handleBack} />
+                  )}
+                  {step === 'blockchain' && (
+                    <BlockchainSelectionStep
+                      key="blockchain"
+                      onNext={handleNext}
+                      onBack={handleBack}
+                    />
+                  )}
+                  {step === 'chain' && (
+                    <ChainSelectionStep key="chain" onNext={handleNext} onBack={handleBack} />
+                  )}
+                  {step === 'form' && (
+                    <FormStep
+                      key="form"
+                      onNext={handleNext}
+                      onBack={handleBack}
+                      projectType={projectType}
                       formData={formData}
-                  />
-                )}
-                {step === 'confirm' && (
-                  <ConfirmationStep
-                    key="confirm"
-                    onNext={handleNext}
-                    onBack={handleBack}
-                    data={{
-                      projectType,
-                      chain,
-                        ...formData.formFields
-                    }}
-                  />
-                )}
-              </AnimatePresence>
+                    />
+                  )}
+                  {step === 'confirm' && (
+                    <ConfirmationStep
+                      key="confirm"
+                      onNext={handleNext}
+                      onBack={handleBack}
+                      data={{
+                        projectType,
+                        chain,
+                        ...formData.formFields,
+                      }}
+                    />
+                  )}
+                </AnimatePresence>
               </div>
             </div>
           </motion.div>
@@ -183,4 +173,3 @@ export default function RegistrationModal({ isOpen, onClose }: Props) {
     </AnimatePresence>
   );
 }
-

@@ -16,7 +16,7 @@ const options = [
     title: 'Non-EVM',
     description: 'For blockchains with their own virtual machine implementation',
     icon: Squares2X2Icon,
-  }
+  },
 ];
 
 export default function BlockchainSelectionStep({ onNext, onBack }: StepProps) {
@@ -38,9 +38,7 @@ export default function BlockchainSelectionStep({ onNext, onBack }: StepProps) {
             <h3 className="text-lg font-medium group-hover:text-primary transition-colors">
               {option.title}
             </h3>
-            <p className="text-sm text-zinc-400 mt-2">
-              {option.description}
-            </p>
+            <p className="text-sm text-zinc-400 mt-2">{option.description}</p>
           </button>
         ))}
       </div>

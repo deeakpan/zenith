@@ -8,10 +8,11 @@ import type { StepProps } from '../types';
 import { COUNTRY_CATEGORIES, COUNTRY_DATA } from '@/app/constants/countryCategories';
 
 // Updated to use Natural Earth dataset
-const COUNTRIES_GEOJSON_URL = 'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson';
+const COUNTRIES_GEOJSON_URL =
+  'https://d2ad6b4ur7yvpq.cloudfront.net/naturalearth-3.3.0/ne_50m_admin_0_countries.geojson';
 
 interface RegionSelectionStepProps extends StepProps {
-  onNext: (data: { regions: string[], totalArea: number, totalPrice: number }) => void;
+  onNext: (data: { regions: string[]; totalArea: number; totalPrice: number }) => void;
   onBack: () => void;
 }
 
@@ -44,19 +45,24 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
   }, []);
 
   // Validate country selection based on area rules
-  const validateCountrySelection = useCallback((regions: SelectedRegion[]): boolean => {
-    // Check if we have any sovereign regions
-    const hasSovereign = regions.some(r => r.category === COUNTRY_CATEGORIES.SOVEREIGN);
-    
-    // If we have a sovereign region, we can't have any other regions
-    if (hasSovereign && regions.length > 1) return false;
-    
-    // For non-sovereign regions, check total area
-    const nonSovereignRegions = regions.filter(r => r.category !== COUNTRY_CATEGORIES.SOVEREIGN);
-    const totalArea = calculateTotalArea(nonSovereignRegions);
-    
-    return totalArea <= 6000000; // 6M km² limit
-  }, [calculateTotalArea]);
+  const validateCountrySelection = useCallback(
+    (regions: SelectedRegion[]): boolean => {
+      // Check if we have any sovereign regions
+      const hasSovereign = regions.some((r) => r.category === COUNTRY_CATEGORIES.SOVEREIGN);
+
+      // If we have a sovereign region, we can't have any other regions
+      if (hasSovereign && regions.length > 1) return false;
+
+      // For non-sovereign regions, check total area
+      const nonSovereignRegions = regions.filter(
+        (r) => r.category !== COUNTRY_CATEGORIES.SOVEREIGN
+      );
+      const totalArea = calculateTotalArea(nonSovereignRegions);
+
+      return totalArea <= 6000000; // 6M km² limit
+    },
+    [calculateTotalArea]
+  );
 
   // Initialize map and GeoJSON layer
   useEffect(() => {
@@ -79,11 +85,11 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
       zoomDelta: 0.5,
       maxBounds: [
         [-90, -180],
-        [90, 180]
+        [90, 180],
       ],
       maxBoundsViscosity: 1.0,
       bounceAtZoomLimits: false,
-      preferCanvas: true
+      preferCanvas: true,
     });
 
     // Update the tile layer to use a CORS-friendly source
@@ -96,7 +102,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
       subdomains: 'abc',
       updateWhenIdle: true,
       updateWhenZooming: false,
-      attribution: '&copy; OpenStreetMap contributors'
+      attribution: '&copy; OpenStreetMap contributors',
     }).addTo(map);
 
     // Force the map to stay full screen with improved handling
@@ -119,11 +125,13 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
     forceFullScreen();
     window.addEventListener('resize', debouncedResize);
 
-    const zoomControl = L.control.zoom({
-      position: 'bottomright',
-      zoomInText: '+',
-      zoomOutText: '-'
-    }).addTo(map);
+    const zoomControl = L.control
+      .zoom({
+        position: 'bottomright',
+        zoomInText: '+',
+        zoomOutText: '-',
+      })
+      .addTo(map);
 
     const zoomControlContainer = zoomControl.getContainer();
     if (zoomControlContainer) {
@@ -137,16 +145,16 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
     // Wait for map to be ready before adding layers
     map.whenReady(() => {
       fetch(COUNTRIES_GEOJSON_URL)
-        .then(res => res.json())
+        .then((res) => res.json())
         .then((geojson) => {
           const geoJsonLayer = L.geoJSON(geojson, {
             style: (feature) => {
-              const isSelected = selectedRegions.some(r => r.name === feature?.properties?.name);
+              const isSelected = selectedRegions.some((r) => r.name === feature?.properties?.name);
               return {
                 color: isSelected ? '#22c55e' : '#ffffff',
                 weight: isSelected ? 2 : 1,
                 fillColor: isSelected ? '#22c55e' : '#1a1a1a',
-                fillOpacity: isSelected ? 0.5 : 0.3
+                fillOpacity: isSelected ? 0.5 : 0.3,
               };
             },
             onEachFeature: (feature, layer) => {
@@ -158,26 +166,30 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
               layer.on({
                 mouseover: (e) => {
                   const layer = e.target;
-                  const isSelected = selectedRegions.some(r => r.name === feature.properties.name);
+                  const isSelected = selectedRegions.some(
+                    (r) => r.name === feature.properties.name
+                  );
                   if (!isSelected) {
                     layer.setStyle({
                       color: '#ffffff',
                       weight: 2,
                       fillColor: '#1a1a1a',
-                      fillOpacity: 0.4
+                      fillOpacity: 0.4,
                     });
                   }
                   layer.bringToFront();
                 },
                 mouseout: (e) => {
                   const layer = e.target;
-                  const isSelected = selectedRegions.some(r => r.name === feature.properties.name);
+                  const isSelected = selectedRegions.some(
+                    (r) => r.name === feature.properties.name
+                  );
                   if (!isSelected) {
                     layer.setStyle({
                       color: '#ffffff',
                       weight: 1,
                       fillColor: '#1a1a1a',
-                      fillOpacity: 0.3
+                      fillOpacity: 0.3,
                     });
                   }
                 },
@@ -191,20 +203,23 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
                   }
 
                   // If clicking the same country, deselect it
-                  const isSelected = selectedRegions.some(r => r.name === regionName);
+                  const isSelected = selectedRegions.some((r) => r.name === regionName);
                   if (isSelected) {
                     // Remove from selected regions
-                    const newSelection = selectedRegions.filter(r => r.name !== regionName);
+                    const newSelection = selectedRegions.filter((r) => r.name !== regionName);
                     setSelectedRegions(newSelection);
                     setTotalArea(calculateTotalArea(newSelection));
                     setIsExceedingLimit(false);
                   } else {
                     // Create potential new selection
-                    const potentialSelection = [...selectedRegions, { 
-                      name: regionName, 
-                      category: countryData.category, 
-                      area: countryData.area 
-                    }];
+                    const potentialSelection = [
+                      ...selectedRegions,
+                      {
+                        name: regionName,
+                        category: countryData.category,
+                        area: countryData.area,
+                      },
+                    ];
 
                     // Validate the potential selection
                     if (validateCountrySelection(potentialSelection)) {
@@ -218,11 +233,11 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
                       setTimeout(() => setIsExceedingLimit(false), 4000);
                     }
                   }
-                }
+                },
               });
-            }
+            },
           }).addTo(map);
-          
+
           geoJsonLayerRef.current = geoJsonLayer;
         });
     });
@@ -241,7 +256,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
   }, [selectedRegions, validateCountrySelection, calculateTotalArea]);
 
   // Add a ref to store the current map view
-  const mapViewRef = useRef<{ center: [number, number], zoom: number } | null>(null);
+  const mapViewRef = useRef<{ center: [number, number]; zoom: number } | null>(null);
 
   // Save map view when it changes
   useEffect(() => {
@@ -255,7 +270,9 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
   // Restore map view after selection changes
   useEffect(() => {
     if (mapRef.current && mapViewRef.current) {
-      mapRef.current.setView(mapViewRef.current.center, mapViewRef.current.zoom, { animate: false });
+      mapRef.current.setView(mapViewRef.current.center, mapViewRef.current.zoom, {
+        animate: false,
+      });
     }
   }, [selectedRegions]);
 
@@ -268,12 +285,12 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
       if (layer instanceof L.Path) {
         const props = (layer as any).feature?.properties;
         if (props?.name) {
-          const isSelected = selectedRegions.some(r => r.name === props.name);
+          const isSelected = selectedRegions.some((r) => r.name === props.name);
           layer.setStyle({
             color: isSelected ? '#22c55e' : '#ffffff',
             weight: isSelected ? 2 : 1,
             fillColor: isSelected ? '#22c55e' : '#1a1a1a',
-            fillOpacity: isSelected ? 0.5 : 0.3
+            fillOpacity: isSelected ? 0.5 : 0.3,
           });
         }
       }
@@ -282,35 +299,35 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
 
   const handleRegionSelection = (regions: string[]) => {
     const regionAreas: { [key: string]: number } = {
-      'Finland': 338424,
-      'Sweden': 450295,
-      'Norway': 385207,
-      'Denmark': 43094,
-      'Iceland': 103000,
-      'Estonia': 45227,
-      'Latvia': 64589,
-      'Lithuania': 65300,
-      'Poland': 312696,
-      'Germany': 357022,
-      'Netherlands': 41543,
-      'Belgium': 30528,
-      'Luxembourg': 2586,
-      'France': 551695,
-      'Spain': 505990,
-      'Portugal': 92212,
-      'Italy': 301340,
-      'Switzerland': 41285,
-      'Austria': 83879,
+      Finland: 338424,
+      Sweden: 450295,
+      Norway: 385207,
+      Denmark: 43094,
+      Iceland: 103000,
+      Estonia: 45227,
+      Latvia: 64589,
+      Lithuania: 65300,
+      Poland: 312696,
+      Germany: 357022,
+      Netherlands: 41543,
+      Belgium: 30528,
+      Luxembourg: 2586,
+      France: 551695,
+      Spain: 505990,
+      Portugal: 92212,
+      Italy: 301340,
+      Switzerland: 41285,
+      Austria: 83879,
       'Czech Republic': 78867,
-      'Slovakia': 49035,
-      'Hungary': 93030,
-      'Slovenia': 20273,
-      'Croatia': 56594,
-      'Romania': 238397,
-      'Bulgaria': 110879,
-      'Greece': 131957,
-      'Albania': 28748,
-      'North Macedonia': 25713
+      Slovakia: 49035,
+      Hungary: 93030,
+      Slovenia: 20273,
+      Croatia: 56594,
+      Romania: 238397,
+      Bulgaria: 110879,
+      Greece: 131957,
+      Albania: 28748,
+      'North Macedonia': 25713,
     };
 
     const totalArea = regions.reduce((sum, region) => sum + (regionAreas[region] || 0), 0);
@@ -319,7 +336,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
     onNext({
       regions,
       totalArea,
-      totalPrice
+      totalPrice,
     });
   };
 
@@ -334,12 +351,12 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
         <div
           ref={mapContainerRef}
           className="w-full h-full touch-none"
-          style={{ 
+          style={{
             touchAction: 'none',
             WebkitTapHighlightColor: 'transparent',
             WebkitTouchCallout: 'none',
             WebkitUserSelect: 'none',
-            userSelect: 'none'
+            userSelect: 'none',
           }}
         />
       </div>
@@ -347,7 +364,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
       <div className="bg-zinc-800/50 p-4 rounded-lg space-y-3">
         <h3 className="text-lg font-medium text-white">Selected Regions</h3>
         <div className="space-y-2 max-h-[200px] overflow-y-auto">
-          {selectedRegions.map(region => (
+          {selectedRegions.map((region) => (
             <div
               key={region.name}
               className="flex items-center justify-between p-2 bg-zinc-700/50 rounded"
@@ -357,13 +374,11 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
                 <span className="text-zinc-400 text-sm ml-2">({region.category})</span>
               </div>
               <div className="flex items-center gap-4">
-                <span className="text-zinc-400">
-                  {region.area.toLocaleString()} km²
-                </span>
-          <button
+                <span className="text-zinc-400">{region.area.toLocaleString()} km²</span>
+                <button
                   onClick={() => {
                     // Remove from selected regions
-                    const newSelection = selectedRegions.filter(r => r.name !== region.name);
+                    const newSelection = selectedRegions.filter((r) => r.name !== region.name);
                     setSelectedRegions(newSelection);
                     setTotalArea(calculateTotalArea(newSelection));
                     setIsExceedingLimit(false);
@@ -375,7 +390,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
                         color: '#ffffff',
                         weight: 1,
                         fillColor: '#1a1a1a',
-                        fillOpacity: 0.3
+                        fillOpacity: 0.3,
                       });
                     }
                   }}
@@ -399,7 +414,8 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
           </div>
           {isExceedingLimit && (
             <div className="mt-2 text-sm text-red-400">
-              Selection exceeds area limits. Sovereign regions cannot be combined with others, and non-sovereign regions cannot exceed 6M km².
+              Selection exceeds area limits. Sovereign regions cannot be combined with others, and
+              non-sovereign regions cannot exceed 6M km².
             </div>
           )}
         </div>
@@ -412,14 +428,14 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
         >
           Back
         </button>
-          <button
+        <button
           onClick={() => {
             if (selectedRegions.length > 0 && !isExceedingLimit) {
               // Pass the actual selected regions data with their areas
               onNext({
-                regions: selectedRegions.map(r => r.name),
+                regions: selectedRegions.map((r) => r.name),
                 totalArea: calculateTotalArea(selectedRegions),
-                totalPrice: calculateCost(selectedRegions)
+                totalPrice: calculateCost(selectedRegions),
               });
             }
           }}
@@ -427,7 +443,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
           className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Confirm Selection
-          </button>
+        </button>
       </div>
     </motion.div>
   );

@@ -21,7 +21,7 @@ export default function MapStep({ data, onUpdate }: StepProps) {
         if (contractAddress) {
           const contract = new ProjectRegistryContract(contractAddress, provider);
           setContract(contract);
-          
+
           // Get taken regions
           const { takenRegions } = await contract.getAllRegionsStatus();
           setTakenRegions(takenRegions);
@@ -54,11 +54,11 @@ export default function MapStep({ data, onUpdate }: StepProps) {
       return; // Don't allow selection of taken regions
     }
 
-    setSelectedRegions(prev => {
+    setSelectedRegions((prev) => {
       const newRegions = prev.includes(regionName)
-        ? prev.filter(r => r !== regionName)
+        ? prev.filter((r) => r !== regionName)
         : [...prev, regionName];
-      
+
       onUpdate({ regions: newRegions });
       return newRegions;
     });
@@ -70,16 +70,16 @@ export default function MapStep({ data, onUpdate }: StepProps) {
         fillColor: '#ff0000',
         fillOpacity: 0.7,
         color: '#000',
-        weight: 1
+        weight: 1,
       };
     }
-    
+
     if (selectedRegions.includes(regionName)) {
       return {
         fillColor: '#4CAF50',
         fillOpacity: 0.7,
         color: '#000',
-        weight: 1
+        weight: 1,
       };
     }
 
@@ -87,7 +87,7 @@ export default function MapStep({ data, onUpdate }: StepProps) {
       fillColor: '#3388ff',
       fillOpacity: 0.2,
       color: '#000',
-      weight: 1
+      weight: 1,
     };
   };
 
@@ -99,11 +99,7 @@ export default function MapStep({ data, onUpdate }: StepProps) {
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
           </div>
         ) : (
-          <MapContainer
-            center={[60, 15]}
-            zoom={4}
-            style={{ height: '100%', width: '100%' }}
-          >
+          <MapContainer center={[60, 15]} zoom={4} style={{ height: '100%', width: '100%' }}>
             <TileLayer
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -113,7 +109,7 @@ export default function MapStep({ data, onUpdate }: StepProps) {
               style={(feature) => getRegionStyle(feature.properties.name)}
               onEachFeature={(feature, layer) => {
                 layer.on({
-                  click: () => handleRegionClick(feature.properties.name)
+                  click: () => handleRegionClick(feature.properties.name),
                 });
               }}
             />
@@ -139,4 +135,4 @@ export default function MapStep({ data, onUpdate }: StepProps) {
       </div>
     </div>
   );
-} 
+}

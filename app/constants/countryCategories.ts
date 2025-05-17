@@ -1,7 +1,7 @@
 export const COUNTRY_CATEGORIES = {
   SOVEREIGN: 'SOVEREIGN',
   DOMAIN: 'DOMAIN',
-  OUTPOST: 'OUTPOST'
+  OUTPOST: 'OUTPOST',
 } as const;
 
 export type CountryCategory = keyof typeof COUNTRY_CATEGORIES;
@@ -12,980 +12,980 @@ export const COUNTRY_DATA: {
     area: number;
     category: CountryCategory;
     active: boolean;
-  }
+  };
 } = {
   // Continents
-  'Antarctica': {
+  Antarctica: {
     area: 14_200_000,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
 
   // Large Countries (>7M km²) - SOVEREIGN
-  'Russia': {
+  Russia: {
     area: 16_376_870,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
-  'China': {
+  China: {
     area: 9_326_410,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
   'United States': {
     area: 9_147_593,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
-  'Canada': {
+  Canada: {
     area: 9_093_507,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
-  'Brazil': {
+  Brazil: {
     area: 8_460_415,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
-  'Australia': {
+  Australia: {
     area: 7_682_300,
     category: COUNTRY_CATEGORIES.SOVEREIGN,
-    active: true
+    active: true,
   },
 
   // Medium Countries (2M-7M km²) - DOMAIN
-  'Algeria': {
+  Algeria: {
     area: 2_381_741,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Argentina': {
+  Argentina: {
     area: 2_736_690,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
   'Dem. Rep. Congo': {
     area: 2_267_048,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Greenland': {
+  Greenland: {
     area: 2_166_086,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'India': {
+  India: {
     area: 2_973_193,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Kazakhstan': {
+  Kazakhstan: {
     area: 2_699_700,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
   'Saudi Arabia': {
     area: 2_149_690,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Sudan': {
+  Sudan: {
     area: 1_861_484,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Libya': {
+  Libya: {
     area: 1_759_540,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Iran': {
+  Iran: {
     area: 1_531_595,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Mongolia': {
+  Mongolia: {
     area: 1_553_556,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Indonesia': {
+  Indonesia: {
     area: 1_904_569,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Mexico': {
+  Mexico: {
     area: 1_943_945,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Peru': {
+  Peru: {
     area: 1_279_996,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Chad': {
+  Chad: {
     area: 1_259_200,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Niger': {
+  Niger: {
     area: 1_266_700,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Angola': {
+  Angola: {
     area: 1_246_700,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Mali': {
+  Mali: {
     area: 1_220_190,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
   'South Africa': {
     area: 1_214_470,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Colombia': {
+  Colombia: {
     area: 1_109_104,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Ethiopia': {
+  Ethiopia: {
     area: 1_096_570,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Bolivia': {
+  Bolivia: {
     area: 1_083_300,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Mauritania': {
+  Mauritania: {
     area: 1_030_700,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
-  'Egypt': {
+  Egypt: {
     area: 995_450,
     category: COUNTRY_CATEGORIES.DOMAIN,
-    active: true
+    active: true,
   },
 
   // Small Countries (<2M km²) - OUTPOST
-  'Nigeria': {
+  Nigeria: {
     area: 910_768,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Venezuela': {
+  Venezuela: {
     area: 882_050,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Tanzania': {
+  Tanzania: {
     area: 885_800,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Namibia': {
+  Namibia: {
     area: 823_290,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Mozambique': {
+  Mozambique: {
     area: 786_380,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Pakistan': {
+  Pakistan: {
     area: 770_875,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Turkey': {
+  Turkey: {
     area: 769_632,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Chile': {
+  Chile: {
     area: 743_812,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Zambia': {
+  Zambia: {
     area: 743_398,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Myanmar': {
+  Myanmar: {
     area: 653_508,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Afghanistan': {
+  Afghanistan: {
     area: 652_230,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Somalia': {
+  Somalia: {
     area: 627_337,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Central African Republic': {
     area: 622_984,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'South Sudan': {
     area: 619_745,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Ukraine': {
+  Ukraine: {
     area: 603_548,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Madagascar': {
+  Madagascar: {
     area: 581_540,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Botswana': {
+  Botswana: {
     area: 566_730,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Kenya': {
+  Kenya: {
     area: 569_140,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'France': {
+  France: {
     area: 551_695,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Thailand': {
+  Thailand: {
     area: 510_890,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Spain': {
+  Spain: {
     area: 498_485,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Turkmenistan': {
+  Turkmenistan: {
     area: 469_930,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Cameroon': {
+  Cameroon: {
     area: 472_710,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Papua New Guinea': {
     area: 452_860,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Morocco': {
+  Morocco: {
     area: 446_300,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Iraq': {
+  Iraq: {
     area: 434_128,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Uzbekistan': {
+  Uzbekistan: {
     area: 425_400,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Paraguay': {
+  Paraguay: {
     area: 397_302,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Zimbabwe': {
+  Zimbabwe: {
     area: 386_847,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Japan': {
+  Japan: {
     area: 364_485,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Republic of the Congo': {
     area: 341_500,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Germany': {
+  Germany: {
     area: 348_672,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Malaysia': {
+  Malaysia: {
     area: 329_847,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Vietnam': {
+  Vietnam: {
     area: 310_070,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Oman': {
+  Oman: {
     area: 309_500,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Finland': {
+  Finland: {
     area: 303_815,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Norway': {
+  Norway: {
     area: 304_282,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Poland': {
+  Poland: {
     area: 304_255,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Italy': {
+  Italy: {
     area: 294_140,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Philippines': {
+  Philippines: {
     area: 298_170,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Ecuador': {
+  Ecuador: {
     area: 276_841,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Burkina Faso': {
     area: 273_602,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'New Zealand': {
     area: 262_443,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Gabon': {
+  Gabon: {
     area: 257_667,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Guinea': {
+  Guinea: {
     area: 245_717,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'United Kingdom': {
     area: 243_610,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Ghana': {
+  Ghana: {
     area: 227_533,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Romania': {
+  Romania: {
     area: 229_891,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Laos': {
+  Laos: {
     area: 230_800,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Uganda': {
+  Uganda: {
     area: 197_100,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Guyana': {
+  Guyana: {
     area: 196_849,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Senegal': {
+  Senegal: {
     area: 192_530,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Kyrgyzstan': {
+  Kyrgyzstan: {
     area: 191_801,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Syria': {
+  Syria: {
     area: 183_630,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Cambodia': {
+  Cambodia: {
     area: 176_515,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Uruguay': {
+  Uruguay: {
     area: 175_015,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Suriname': {
+  Suriname: {
     area: 156_000,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Tunisia': {
+  Tunisia: {
     area: 155_360,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Nepal': {
+  Nepal: {
     area: 143_351,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Tajikistan': {
+  Tajikistan: {
     area: 141_510,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Bangladesh': {
+  Bangladesh: {
     area: 130_170,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Greece': {
+  Greece: {
     area: 130_647,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Nicaragua': {
+  Nicaragua: {
     area: 119_990,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'North Korea': {
     area: 120_408,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Benin': {
+  Benin: {
     area: 114_763,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Honduras': {
+  Honduras: {
     area: 111_890,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Bulgaria': {
+  Bulgaria: {
     area: 108_489,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Guatemala': {
+  Guatemala: {
     area: 107_159,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Cuba': {
+  Cuba: {
     area: 103_800,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Iceland': {
+  Iceland: {
     area: 100_250,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'South Korea': {
     area: 99_909,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Liberia': {
+  Liberia: {
     area: 96_320,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Malawi': {
+  Malawi: {
     area: 94_080,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Portugal': {
+  Portugal: {
     area: 91_982,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Hungary': {
+  Hungary: {
     area: 89_608,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Jordan': {
+  Jordan: {
     area: 88_802,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'United Arab Emirates': {
     area: 83_600,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Azerbaijan': {
+  Azerbaijan: {
     area: 82_629,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Austria': {
+  Austria: {
     area: 82_445,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Serbia': {
+  Serbia: {
     area: 77_474,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Czechia': {
+  Czechia: {
     area: 77_247,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Panama': {
+  Panama: {
     area: 74_340,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Sierra Leone': {
     area: 71_620,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Georgia': {
+  Georgia: {
     area: 69_700,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Ireland': {
+  Ireland: {
     area: 68_883,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Sri Lanka': {
     area: 61_860,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Latvia': {
+  Latvia: {
     area: 62_249,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Lithuania': {
+  Lithuania: {
     area: 62_680,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Croatia': {
+  Croatia: {
     area: 55_974,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Togo': {
+  Togo: {
     area: 54_385,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Bosnia and Herzegovina': {
     area: 51_129,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Costa Rica': {
     area: 51_060,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Slovakia': {
+  Slovakia: {
     area: 48_105,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Dominican Republic': {
     area: 48_320,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Estonia': {
+  Estonia: {
     area: 42_388,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Denmark': {
+  Denmark: {
     area: 42_434,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Switzerland': {
+  Switzerland: {
     area: 39_997,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Bhutan': {
+  Bhutan: {
     area: 38_394,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Moldova': {
+  Moldova: {
     area: 32_891,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Taiwan': {
+  Taiwan: {
     area: 32_260,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Belgium': {
+  Belgium: {
     area: 30_278,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Lesotho': {
+  Lesotho: {
     area: 30_355,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Netherlands': {
+  Netherlands: {
     area: 33_893,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Solomon Islands': {
     area: 28_400,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Burundi': {
+  Burundi: {
     area: 27_834,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Haiti': {
+  Haiti: {
     area: 27_560,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Albania': {
+  Albania: {
     area: 27_398,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Equatorial Guinea': {
     area: 28_051,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Guinea-Bissau': {
     area: 28_120,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Armenia': {
+  Armenia: {
     area: 28_342,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'North Macedonia': {
     area: 25_433,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Rwanda': {
+  Rwanda: {
     area: 24_668,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Djibouti': {
+  Djibouti: {
     area: 23_180,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Belize': {
+  Belize: {
     area: 22_806,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Israel': {
+  Israel: {
     area: 21_497,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'El Salvador': {
     area: 20_721,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Slovenia': {
+  Slovenia: {
     area: 20_151,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Fiji': {
+  Fiji: {
     area: 18_272,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Kuwait': {
+  Kuwait: {
     area: 17_818,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Eswatini': {
+  Eswatini: {
     area: 17_204,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Timor-Leste': {
     area: 14_874,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Montenegro': {
+  Montenegro: {
     area: 13_452,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Vanuatu': {
+  Vanuatu: {
     area: 12_189,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Qatar': {
+  Qatar: {
     area: 11_586,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Jamaica': {
+  Jamaica: {
     area: 10_831,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Gambia': {
+  Gambia: {
     area: 10_120,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Bahamas': {
+  Bahamas: {
     area: 10_010,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Lebanon': {
+  Lebanon: {
     area: 10_230,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Cyprus': {
+  Cyprus: {
     area: 9_241,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Palestine': {
+  Palestine: {
     area: 6_020,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Brunei': {
+  Brunei: {
     area: 5_265,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Trinidad and Tobago': {
     area: 5_128,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Cabo Verde': {
     area: 4_033,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Luxembourg': {
+  Luxembourg: {
     area: 2_586,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Samoa': {
+  Samoa: {
     area: 2_821,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Mauritius': {
+  Mauritius: {
     area: 2_030,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Comoros': {
+  Comoros: {
     area: 1_862,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Dominica': {
+  Dominica: {
     area: 751,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Tonga': {
+  Tonga: {
     area: 717,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Singapore': {
+  Singapore: {
     area: 709,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Micronesia': {
+  Micronesia: {
     area: 702,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Bahrain': {
+  Bahrain: {
     area: 786,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Saint Lucia': {
     area: 606,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Kiribati': {
+  Kiribati: {
     area: 811,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Sao Tome and Principe': {
     area: 964,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Palau': {
+  Palau: {
     area: 459,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Andorra': {
+  Andorra: {
     area: 468,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Antigua and Barbuda': {
     area: 443,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Barbados': {
+  Barbados: {
     area: 431,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Saint Vincent and the Grenadines': {
     area: 389,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Grenada': {
+  Grenada: {
     area: 344,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Malta': {
+  Malta: {
     area: 316,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Maldives': {
+  Maldives: {
     area: 298,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Saint Kitts and Nevis': {
     area: 261,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Marshall Islands': {
     area: 181,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Liechtenstein': {
+  Liechtenstein: {
     area: 160,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'San Marino': {
     area: 61,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Tuvalu': {
+  Tuvalu: {
     area: 26,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Nauru': {
+  Nauru: {
     area: 21,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Monaco': {
+  Monaco: {
     area: 2,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
   'Vatican City': {
     area: 0.44,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
+    active: true,
   },
-  'Eritrea': {
+  Eritrea: {
     area: 101_000,
     category: COUNTRY_CATEGORIES.OUTPOST,
-    active: true
-  }
+    active: true,
+  },
 };
 
 // Helper function to get all countries in a specific category
@@ -995,7 +995,7 @@ export const getCountriesByCategory = (category: CountryCategory) => {
     .map(([name, data]) => ({
       name,
       area: data.area,
-      active: data.active
+      active: data.active,
     }));
 };
 
@@ -1006,6 +1006,6 @@ export const getActiveCountries = () => {
     .map(([name, data]) => ({
       name,
       area: data.area,
-      category: data.category
+      category: data.category,
     }));
 };

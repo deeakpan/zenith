@@ -5,7 +5,7 @@ import dynamic from 'next/dynamic';
 import { useRegistrationModal } from '@/app/hooks/useRegistrationModal';
 
 const RegistrationModal = dynamic(() => import('@/app/components/registration/RegistrationModal'), {
-  ssr: false
+  ssr: false,
 });
 
 export function ModalProvider() {

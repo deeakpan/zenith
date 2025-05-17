@@ -2,42 +2,42 @@ import type { ProjectQuestion } from '../types/project';
 
 // Common questions for all project types
 const commonQuestions: ProjectQuestion[] = [
-    {
-      id: 'name',
-      label: 'Project Name',
-      type: 'text',
-      required: true,
-      placeholder: 'Enter your project name',
-      transform: 'uppercase'
-    },
-    {
-      id: 'logo',
-      label: 'Project Logo',
-      type: 'image',
-      required: true,
-      placeholder: 'Upload your project logo (PNG, JPG, SVG)'
-    },
-    {
-      id: 'about',
-      label: 'About',
-      type: 'textarea',
-      required: true,
-    placeholder: 'Describe your project in detail'
-    },
+  {
+    id: 'name',
+    label: 'Project Name',
+    type: 'text',
+    required: true,
+    placeholder: 'Enter your project name',
+    transform: 'uppercase',
+  },
+  {
+    id: 'logo',
+    label: 'Project Logo',
+    type: 'image',
+    required: true,
+    placeholder: 'Upload your project logo (PNG, JPG, SVG)',
+  },
+  {
+    id: 'about',
+    label: 'About',
+    type: 'textarea',
+    required: true,
+    placeholder: 'Describe your project in detail',
+  },
   {
     id: 'website',
     label: 'Website',
     type: 'url',
     required: false,
-    placeholder: 'https://your-project.com'
+    placeholder: 'https://your-project.com',
   },
   {
     id: 'social',
     label: 'Social Link',
     type: 'url',
     required: false,
-    placeholder: 'Enter your Telegram, Discord, or X link'
-  }
+    placeholder: 'Enter your Telegram, Discord, or X link',
+  },
 ];
 
 export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
@@ -48,48 +48,48 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Layer Type',
       type: 'select',
       required: true,
-      options: ['Layer 1', 'Layer 2', 'Sidechain', 'Application Chain', 'Other']
+      options: ['Layer 1', 'Layer 2', 'Sidechain', 'Application Chain', 'Other'],
     },
     {
       id: 'otherLayerType',
       label: 'Other Layer Type',
       type: 'text',
       required: false,
-      placeholder: 'Specify your layer type'
+      placeholder: 'Specify your layer type',
     },
     {
       id: 'consensus',
       label: 'Consensus Mechanism',
       type: 'select',
       required: true,
-      options: ['Proof of Stake', 'Proof of Work', 'Proof of Authority', 'Other']
+      options: ['Proof of Stake', 'Proof of Work', 'Proof of Authority', 'Other'],
     },
     {
       id: 'tps',
       label: 'Transactions Per Second (TPS)',
       type: 'number',
       required: true,
-      placeholder: 'Enter TPS'
+      placeholder: 'Enter TPS',
     },
     {
       id: 'blockTime',
       label: 'Block Time (seconds)',
       type: 'number',
       required: true,
-      placeholder: 'Enter block time in seconds'
+      placeholder: 'Enter block time in seconds',
     },
     {
       id: 'nativeToken',
       label: 'Native Token',
       type: 'text',
       required: true,
-      placeholder: 'Enter native token symbol'
+      placeholder: 'Enter native token symbol',
     },
     {
       id: 'themeColor',
       label: 'Theme Color',
       type: 'color',
-      required: true
+      required: true,
     },
     {
       id: 'regions',
@@ -97,8 +97,8 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'regions',
       required: true,
       icon: 'map',
-      placeholder: 'Click to select regions on map'
-    }
+      placeholder: 'Click to select regions on map',
+    },
   ],
   defi: [
     ...commonQuestions,
@@ -107,15 +107,15 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'DeFi Type',
       type: 'select',
       required: true,
-      options: ['DEX', 'Lending', 'Yield Farming', 'Insurance', 'Other']
+      options: ['DEX', 'Lending', 'Yield Farming', 'Insurance', 'Other'],
     },
     {
       id: 'tvl',
       label: 'Total Value Locked (TVL)',
       type: 'number',
       required: false,
-      placeholder: 'Enter TVL in USD'
-    }
+      placeholder: 'Enter TVL in USD',
+    },
   ],
   nft: [
     ...commonQuestions,
@@ -124,8 +124,8 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'NFT Type',
       type: 'select',
       required: true,
-      options: ['Art', 'Gaming', 'Music', 'Virtual Real Estate', 'Other']
-    }
+      options: ['Art', 'Gaming', 'Music', 'Virtual Real Estate', 'Other'],
+    },
   ],
   bridge: [
     ...commonQuestions,
@@ -134,21 +134,21 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Bridge Category',
       type: 'select',
       required: true,
-      options: ['Token', 'NFT', 'Message', 'Other']
+      options: ['Token', 'NFT', 'Message', 'Other'],
     },
     {
       id: 'otherCategory',
       label: 'Specify Category',
       type: 'text',
       required: false,
-      placeholder: 'Describe your bridge category...'
+      placeholder: 'Describe your bridge category...',
     },
     {
       id: 'networks',
       label: 'Connected Networks',
       type: 'select',
       required: true,
-      options: ['Base']
+      options: ['Base'],
     },
     {
       id: 'about',
@@ -158,8 +158,8 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       minLength: 50,
       maxLength: 200,
       placeholder: 'Describe your bridge in 50-200 characters...',
-      className: 'whitespace-pre-wrap break-words'
-    }
+      className: 'whitespace-pre-wrap break-words',
+    },
   ],
   infra: [
     ...commonQuestions,
@@ -168,15 +168,15 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Infrastructure Type',
       type: 'select',
       required: true,
-      options: ['RPC', 'Indexer', 'Explorer', 'Validator', 'Other']
+      options: ['RPC', 'Indexer', 'Explorer', 'Validator', 'Other'],
     },
     {
       id: 'otherType',
       label: 'Specify Type',
       type: 'text',
       required: false,
-      placeholder: 'Describe your infrastructure type...'
-    }
+      placeholder: 'Describe your infrastructure type...',
+    },
   ],
   social: [
     ...commonQuestions,
@@ -185,14 +185,14 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Social Platform Category',
       type: 'select',
       required: true,
-      options: ['Social Network', 'Content Platform', 'Community', 'Other']
+      options: ['Social Network', 'Content Platform', 'Community', 'Other'],
     },
     {
       id: 'otherCategory',
       label: 'Specify Category',
       type: 'text',
       required: false,
-      placeholder: 'Describe your social platform category...'
+      placeholder: 'Describe your social platform category...',
     },
     {
       id: 'features',
@@ -202,33 +202,33 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       minLength: 50,
       maxLength: 200,
       placeholder: 'List key features of your social platform...',
-      className: 'whitespace-pre-wrap break-words'
-    }
+      className: 'whitespace-pre-wrap break-words',
+    },
   ],
   ai: [
     ...commonQuestions,
-    { 
+    {
       id: 'category',
       label: 'AI Category',
       type: 'select',
       required: true,
-      options: ['Language Model', 'Image Generation', 'Prediction', 'Other']
+      options: ['Language Model', 'Image Generation', 'Prediction', 'Other'],
     },
-    { 
+    {
       id: 'otherCategory',
       label: 'Specify Category',
       type: 'text',
       required: false,
-      placeholder: 'Describe your AI category...'
+      placeholder: 'Describe your AI category...',
     },
-    { 
+    {
       id: 'model',
       label: 'AI Model Type',
       type: 'select',
       required: true,
-      options: ['LLM', 'GAN', 'Transformer', 'Other']
+      options: ['LLM', 'GAN', 'Transformer', 'Other'],
     },
-    { 
+    {
       id: 'features',
       label: 'Key Features',
       type: 'textarea',
@@ -236,8 +236,8 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       minLength: 50,
       maxLength: 200,
       placeholder: 'List key features of your AI project...',
-      className: 'whitespace-pre-wrap break-words'
-    }
+      className: 'whitespace-pre-wrap break-words',
+    },
   ],
   oracle: [
     ...commonQuestions,
@@ -246,21 +246,21 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Oracle Type',
       type: 'select',
       required: true,
-      options: ['Price Feed', 'Random Number', 'Weather', 'Sports', 'Other']
+      options: ['Price Feed', 'Random Number', 'Weather', 'Sports', 'Other'],
     },
     {
       id: 'otherType',
       label: 'Specify Type',
       type: 'text',
       required: false,
-      placeholder: 'Describe your oracle type...'
+      placeholder: 'Describe your oracle type...',
     },
     {
       id: 'updateFrequency',
       label: 'Update Frequency',
       type: 'select',
       required: true,
-      options: ['Real-time', 'Every minute', 'Every hour', 'Daily', 'Other']
+      options: ['Real-time', 'Every minute', 'Every hour', 'Daily', 'Other'],
     },
     {
       id: 'supportedNetworks',
@@ -268,8 +268,8 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'text',
       required: true,
       placeholder: 'Base Polygon Solana',
-      className: 'whitespace-pre-wrap break-words'
-    }
+      className: 'whitespace-pre-wrap break-words',
+    },
   ],
   gamefi: [
     ...commonQuestions,
@@ -278,14 +278,14 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'Game Type',
       type: 'select',
       required: true,
-      options: ['MMORPG', 'Strategy', 'RPG', 'Action', 'Other']
+      options: ['MMORPG', 'Strategy', 'RPG', 'Action', 'Other'],
     },
     {
       id: 'otherType',
       label: 'Specify Type',
       type: 'text',
       required: false,
-      placeholder: 'Describe your game type...'
+      placeholder: 'Describe your game type...',
     },
     {
       id: 'tokenomics',
@@ -293,7 +293,7 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'textarea',
       required: true,
       placeholder: 'Describe your game tokenomics and economy...',
-      className: 'whitespace-pre-wrap break-words'
+      className: 'whitespace-pre-wrap break-words',
     },
     {
       id: 'gameplay',
@@ -301,15 +301,15 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'textarea',
       required: true,
       placeholder: 'Describe your core gameplay mechanics...',
-      className: 'whitespace-pre-wrap break-words'
+      className: 'whitespace-pre-wrap break-words',
     },
     {
       id: 'platform',
       label: 'Platform',
       type: 'select',
       required: true,
-      options: ['Web', 'Mobile', 'PC', 'Console', 'Multi-platform']
-    }
+      options: ['Web', 'Mobile', 'PC', 'Console', 'Multi-platform'],
+    },
   ],
   dao: [
     ...commonQuestions,
@@ -318,14 +318,14 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       label: 'DAO Type',
       type: 'select',
       required: true,
-      options: ['Protocol', 'Investment', 'Social', 'Grants', 'Other']
+      options: ['Protocol', 'Investment', 'Social', 'Grants', 'Other'],
     },
     {
       id: 'otherType',
       label: 'Specify Type',
       type: 'text',
       required: false,
-      placeholder: 'Describe your DAO type...'
+      placeholder: 'Describe your DAO type...',
     },
     {
       id: 'governance',
@@ -333,7 +333,7 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'textarea',
       required: true,
       placeholder: 'Describe your governance model and voting mechanisms...',
-      className: 'whitespace-pre-wrap break-words'
+      className: 'whitespace-pre-wrap break-words',
     },
     {
       id: 'supportedNetworks',
@@ -341,17 +341,17 @@ export const PROJECT_QUESTIONS: Record<string, ProjectQuestion[]> = {
       type: 'text',
       required: true,
       placeholder: 'Base Polygon Solana',
-      className: 'whitespace-pre-wrap break-words'
-    }
+      className: 'whitespace-pre-wrap break-words',
+    },
   ],
   other: [
     ...commonQuestions,
-    { 
+    {
       id: 'category',
       label: 'Project Category',
       type: 'text',
       required: true,
-      placeholder: 'Describe your project category...'
-    }
-  ]
+      placeholder: 'Describe your project category...',
+    },
+  ],
 };
