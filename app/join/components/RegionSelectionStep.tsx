@@ -375,7 +375,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-zinc-400">{region.area.toLocaleString()} km²</span>
-                <button
+          <button
                   onClick={() => {
                     // Remove from selected regions
                     const newSelection = selectedRegions.filter((r) => r.name !== region.name);
@@ -428,7 +428,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
         >
           Back
         </button>
-        <button
+          <button
           onClick={() => {
             if (selectedRegions.length > 0 && !isExceedingLimit) {
               // Pass the actual selected regions data with their areas
@@ -443,7 +443,7 @@ export default function RegionSelectionStep({ onNext, onBack }: RegionSelectionS
           className="px-6 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Confirm Selection
-        </button>
+          </button>
       </div>
     </motion.div>
   );

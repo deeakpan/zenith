@@ -148,7 +148,7 @@ export default function ConfirmationStep({ onBack, onNext, data }: ExtendedStepP
     };
 
     fetchEthPrice();
-  }, []);
+  }, [data.formFields?.totalPrice, data.formFields?.totalArea]);
 
   const handleConnect = async (connector: any) => {
     try {
