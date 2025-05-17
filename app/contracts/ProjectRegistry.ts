@@ -21,11 +21,7 @@ export class ProjectRegistryContract {
     }
 
     try {
-      this.contract = new ethers.Contract(
-        address,
-        ProjectRegistryABI,
-        provider
-      );
+      this.contract = new ethers.Contract(address, ProjectRegistryABI, provider);
     } catch (error) {
       console.error('Error initializing contract:', error);
       throw new Error('Failed to initialize contract with provided ABI');
